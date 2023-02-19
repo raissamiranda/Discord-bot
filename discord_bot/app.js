@@ -22,3 +22,18 @@ const Client = new Discord.Client({
         Discord.Partials.GuildScheduledEvent
     ]
 }); // Creating a new client with intents and partials needed for this bot to function
+
+// BOT GETS ON
+// We need to make sure that the bot gets online (application gets online)
+// We do this by defining a ready event to make sure that the bot is actually up and running
+// Ready event captures the state when the bot gets online
+// Ready is the event and the second parametter is a function for what wil happen
+Client.on("ready", (client) => {
+    console.log("This bot is now online: " + client.user.tag); // bot name
+});
+
+// LOG IN
+// Logs in the discord bot with the password stored in an external file
+Client.login("MTA3NjkzNTk2NDM2ODMxMDMyMg.GZ8Lu4.vQzDAx6r3gqgdR-RskDbXQ_cn-iJWT7NpVnLpI");
+
+
