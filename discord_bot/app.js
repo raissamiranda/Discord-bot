@@ -47,15 +47,35 @@ Client.on("messageCreate", (message) => {
 
     // only run this code is the user that wrote the message is NOT a bot
     if (!message.author.bot){
-        message.reply("Hmmm, I think you're not a bot, " + message.author.username + "!");
+        //message.reply("Hmmm, I think you're not a bot, " + message.author.username + "!");
     }
 
     // commands
     if(userInputText == "~commands" || userInputText == "~help"){
-        message.reply("This bot has the following commands: ~help ~commands ~age ~math");
+        message.reply("This bot has the following commands: ~help\n~commands\n~server age\n~member\n~discord age\n~member server age");
     }
-});
 
+    // server age
+    if(userInputText == "~server age"){
+        //console.log(message.guild.createdTimestamp); // milisenconds
+        //console.log(new Date(message.guild.createdTimestamp)); // converts manually
+        //console.log(message.guild.createdAt);  // converts automatically
+        //console.log(message.guild.createdAt.toString()); // date more readable
+
+        message.reply(message.guild.name + " was created on " + message.guild.createdAt.toString() + "!");
+    } 
+
+    // member discord age
+    if(userInputText == "~member discord age"){
+        message.reply(message.author.username + " in discord since " + message.author.createdAt.toString() + "!");
+    }
+    
+    // member server age
+    if(userInputText == "~member server age"){
+        message.reply(message.author.username + " in " + message.guild.name +  " since " + message.member.joinedAt.toString() + "!");
+    }
+
+});
 
 
 // LOG IN
