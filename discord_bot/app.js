@@ -39,7 +39,7 @@ Client.on("ready", (client) => {
 // messageCreate event captures data of a message that is created/posted
 Client.on("messageCreate", (message) => {
     // message content to lower case only
-
+    const userInputText = message.content.toLowerCase();
 
     // only allow non-bots to perform any code execution
     if(message.author.bot) {return };
@@ -47,7 +47,12 @@ Client.on("messageCreate", (message) => {
 
     // only run this code is the user that wrote the message is NOT a bot
     if (!message.author.bot){
-        message.reply("Hmmm, I think you're not a bot!");
+        message.reply("Hmmm, I think you're not a bot, " + message.author.username + "!");
+    }
+
+    // commands
+    if(userInputText == "~commands" || userInputText == "~help"){
+        message.reply("This bot has the following commands: ~help ~commands ~age ~math");
     }
 });
 
