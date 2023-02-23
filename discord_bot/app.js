@@ -37,6 +37,6 @@ Client.on("ready", (client) => {
 
 // LOG IN
 // Logs in the discord bot with the password stored in an external file
-Client.login(token);
+Client.login(token); 
 
 
