@@ -1,7 +1,10 @@
 // variable to hold the reference to the discord.js node module
 const Discord = require("discord.js"); // discord.js node module
 
-// Gateway Instents were introduced by Dicord so bot developers can choose 
+// contains a string that is the password/token for the discord bot
+const { token } = require("./config.json");
+
+// Gateway Intents were introduced by Discord so bot developers can choose 
 // which events bot receives based on which data it needs to function
 // With partials we will be able to receive the full data of the objects returned from each event
 // New application which is going to be our discord bot
@@ -34,6 +37,6 @@ Client.on("ready", (client) => {
 
 // LOG IN
 // Logs in the discord bot with the password stored in an external file
-Client.login("MTA3NjkzNTk2NDM2ODMxMDMyMg.GZ8Lu4.vQzDAx6r3gqgdR-RskDbXQ_cn-iJWT7NpVnLpI");
+Client.login(token);
 
 
