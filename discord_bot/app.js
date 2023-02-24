@@ -4,6 +4,9 @@ const Discord = require("discord.js"); // discord.js node module
 // contains a string that is the password/token for the discord bot
 const { token } = require("./config.json");
 
+// variable for playing a game
+var playing_game = 0; 
+
 // Gateway Intents were introduced by Discord so bot developers can choose 
 // which events bot receives based on which data it needs to function
 // With partials we will be able to receive the full data of the objects returned from each event
@@ -47,12 +50,12 @@ Client.on("messageCreate", (message) => {
 
     // only run this code is the user that wrote the message is NOT a bot
     if (!message.author.bot){
-        message.reply("Hmmm, I think you're not a bot, " + message.author.username + "!");
+        //message.reply("Hmmm, I think you're not a bot, " + message.author.username + "!");
     }
 
     // commands
     if(userInputText == "~commands" || userInputText == "~help"){
-        message.reply("This bot has the following commands: ~help\n~commands\n~server age\n~members\n~discord age\n~member server age");
+        message.reply("This bot has the following commands: ~help\n~commands\n~server age\n~members\n~discord age\n~member server age\n~game");
     }
 
     // server age
@@ -90,7 +93,94 @@ Client.on("messageCreate", (message) => {
             })
     }
 
+
+    // GAME rock paper or scissors
+    if(userInputText == "~game"){
+        message.reply("Let's play rock, paper and scissors " + message.author.username + ". What is your choice, loser?")
+        playing_game = 1;
+    }
+    
+    const pcOptions = ["rock", "paper", "scissors"];  //  array for bot options
+    const pcRoll = Math.floor(Math.random() * 3);  // generates a random number 0, 1 or 2
+    
+    // user chose rock
+    if(userInputText == "rock" && playing_game){
+        let statusMessage = "";
+
+        if(pcOptions[pcRoll] ==  userInputText){
+            statusMessage = "Oh no, it's a draw! " + message.author.username +"! :(";
+        }
+        else if(pcOptions[pcRoll] == "scissors"){
+            statusMessage = "Luck you. You won, " + message.author.username + "! :X";
+        }
+        else if(pcOptions[pcRoll] == "paper"){
+            statusMessage = "I told you're a loser, " + message.author.username + "! :)";
+        }
+        else{
+            message.reply("Error in the code"); // only run if something is wrong
+        }
+        
+        message.reply("I chose " + pcOptions[pcRoll] +". " + statusMessage + "\nDo you want to play again?");
+        
+    }
+    
+    
+    // user chose paper
+    if(userInputText == "paper" && playing_game){
+        let statusMessage = "";
+
+        if(pcOptions[pcRoll] ==  userInputText){
+            statusMessage = "Oh no, it's a draw! " + message.author.username +"! :(";
+        }
+        else if(pcOptions[pcRoll] == "scissors"){
+            statusMessage = "I told you're a loser, " + message.author.username + "! :)";
+        }
+        else if(pcOptions[pcRoll] == "rock"){
+            statusMessage = "Luck you. You won, " + message.author.username + "! :X";
+        }
+        else{
+            message.reply("Error in the code"); // only run if something is wrong
+        }
+        
+        message.reply("I chose " + pcOptions[pcRoll] +". " + statusMessage + "\nDo you want to play again?");
+    }
+    
+    
+    // user chose scissors
+    if(userInputText == "scissors" && playing_game){
+        let statusMessage = "";
+        
+        if(pcOptions[pcRoll] ==  userInputText){
+            statusMessage = "Oh no, it's a draw! " + message.author.username +"! :(";
+        }
+        else if(pcOptions[pcRoll] == "paper"){
+            statusMessage = "Luck you. You won, " + message.author.username + "! :X";
+        }
+        else if(pcOptions[pcRoll] == "rock"){
+            statusMessage = "I told you're a loser, " + message.author.username + "! :)";
+        }
+        else{
+            message.reply("Error in the code"); // only run if something is wrong
+        }
+        
+        message.reply("I chose " + pcOptions[pcRoll] +". " + statusMessage + "\nDo you want to play again?");
+    }
+    
+
+    // Playing again
+    if(userInputText == "no" || userInputText == "not" && playing_game){
+        message.reply("Thanks for playing with me!");
+        playing_game = 0;
+    }
+    
+    if (userInputText == "yes" && playing_game){
+        message.reply("What's your new choice?");
+    }
+
 });
+
+
+
 
 // LOG IN
 // Logs in the discord bot with the password stored in an external file
