@@ -52,7 +52,7 @@ Client.on("messageCreate", (message) => {
 
     // commands
     if(userInputText == "~commands" || userInputText == "~help"){
-        message.reply("This bot has the following commands: ~help\n~commands\n~server age\n~member\n~discord age\n~member server age");
+        message.reply("This bot has the following commands: ~help\n~commands\n~server age\n~members\n~discord age\n~member server age");
     }
 
     // server age
@@ -75,8 +75,22 @@ Client.on("messageCreate", (message) => {
         message.reply(message.author.username + " in " + message.guild.name +  " since " + message.member.joinedAt.toString() + "!");
     }
 
-});
+    // members list
+    // fetch guild members returns a promise
+    if(userInputText == "~members"){
+        message.guild.members.fetch().then(
+            (value) => {
+                value.forEach(user => {
+                    // print each user's username
+                    message.reply(user.user.username);
+                });
+        
+            }, (error) => {
+                console.log(error); // prints errors if it occurs
+            })
+    }
 
+});
 
 // LOG IN
 // Logs in the discord bot with the password stored in an external file
