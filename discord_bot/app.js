@@ -47,7 +47,7 @@ Client.on("messageCreate", (message) => {
 
     // only run this code is the user that wrote the message is NOT a bot
     if (!message.author.bot){
-        //message.reply("Hmmm, I think you're not a bot, " + message.author.username + "!");
+        message.reply("Hmmm, I think you're not a bot, " + message.author.username + "!");
     }
 
     // commands
