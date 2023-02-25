@@ -135,10 +135,7 @@ Client.on("messageCreate", (message) => {
         }
         
         message.reply("I chose " + pcOptions[pcRoll] + ". " + statusMessage );
-        let obj = returnNewObject(message.author.id, message.author.tag);
-        //saveGameData(obj);
-        //console.log(returnGameData());
-        
+        let obj = returnNewObject(message.author.id, message.author.tag);        
     }
     
     // user chose paper
@@ -197,6 +194,18 @@ Client.on("messageCreate", (message) => {
     if (userInputText == "yes" && playing_game){
         message.reply("What's your new choice?");
     } */
+
+
+    // display games list command
+    else if(userInputText == "~games list"){
+        message.reply(gamesList());
+    }
+
+
+    // display a specific game command
+    else if(Number(userInputText)){
+        message.reply(displayGame(Number(userInputText)));
+    }
 
 });
 
@@ -267,19 +276,76 @@ Client.on("messageCreate", (message) => {
             // if array is empty
             if(gameData.length < 1){
                 gameData = [newGameObject]; // the empty array is replaced by array with 1 object inside
-                console.log("primeiro");
             }
             
             // if array contains objects already
             else if(gameData.length > 0){
                 gameData.push(newGameObject); // push object into the back of the array
-                console.log("segundo");
             }
 
         }
 
         saveGameData(gameData);  // save data in the file
 
+    }
+
+
+    // get data from gamedata.json and return a list of games
+    function gamesList(){
+        const data = returnGameData();  // gamedata.json
+        let replyMessage = undefined;  // default undefined if no games are found
+
+        // if we found a game
+        if(data.length > 0){
+            replyMessage = "";
+        }
+
+        // loop through all games and construct a reply message
+        for(let i = 0; i < data.length; i++){
+            replyMessage += "Write <" + data[i].ID + "> to view result of this game\n";
+        }
+
+        // still undefined if no games are found
+        if(replyMessage == undefined){
+            return "No games exist!";
+        }
+
+        return replyMessage;
+    }
+
+
+    // display stats of a specific game
+    function displayGame(ID){
+        const data = returnGameData();  // gamedata.json
+        let replyMessage = undefined;  // default undefined if no games are found
+        let found = false; // default false if the specific ID doesn't exist
+
+        // if we found a game
+        if(data.length > 0){
+            replyMessage = "";
+        }
+
+        // find specific game in the array
+        for(let i = 0; i < data.length; i++){
+            if(ID == data[i].ID){
+                found = true; // turned to true since we found the game
+                replyMessage = data[i].name + " vs PC\nWins: " + data[i].win + "\nLost: " + 
+                               data[i].lose + "\nDraw: " + data[i].draw + "\n" + data[i].time;
+
+            }
+        }
+
+        // still undefined if no games are found
+        if(replyMessage == undefined){
+            return "No games exist!";
+        }
+
+        // couldn't dinf the specific game so found is still false
+        else if(!found){
+            return "Couldn't find the specific game!";
+        }
+
+        return replyMessage;
     }
 
 
